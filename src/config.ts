@@ -1,6 +1,6 @@
 export const databasePrefix = process.env.BIG_BROWSER_DATABASE_PREFIX || 'big-browser';
 export const databaseUrl = process.env.BIG_BROWSER_DATABASE_URL || process.env.REDIS_URL || 'redis://localhost:6379/0';
-export const memory = parseEnvInt('BIG_BROWSER_MEMORY', 0, 10000) || 2;
+export const memory = parseEnvInt('BIG_BROWSER_MEMORY', 0, 10000) || 5;
 export const port = parseEnvInt('BIG_BROWSER_PORT', 1, 65535) || parseEnvInt('PORT', 1, 65535) || 3000;
 
 function parseEnvInt(name: string, min?: number, max?: number) {
