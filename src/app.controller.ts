@@ -1,12 +1,23 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Request } from 'express';
 
-@Controller()
+@Controller('/ua')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+
+  constructor(
+    private readonly appService: AppService
+  ) {}
+
+  @Post()
+  detectUserAgent(
+    @Req() req: Request
+  ) {
+    return this.appService.detectUserAgent(req.get('User-Agent'));
+  }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  retrieveUserAgents() {
+    return this.appService.retrieveUserAgents();
   }
 }
