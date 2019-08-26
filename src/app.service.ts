@@ -23,7 +23,7 @@ export class AppService {
     }
 
     const uas = await db.zrangebyscore(key('ua'), 0, Date.now());
-    await this.cleanUpUserAgents(uas.slice(0, Math.max(0, uas.length - memory)));
+    await this.cleanUpUserAgents(uas.reverse().slice(memory));
 
     return uas.reverse().slice(0, memory).map(ua => JSON.parse(ua));
   }
