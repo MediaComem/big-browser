@@ -41,18 +41,8 @@
     "tslint": "5.16.0",
     "typescript": "3.4.3"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+  "engines": {
+    "node": "^12.0.0",
+    "npm": "^6.9.0"
   }
 }
