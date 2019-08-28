@@ -1,7 +1,7 @@
 # Big Browser
 
-A demo application written with [TypeScript](https://www.typescriptlang.org/)
-and [Vue](https://vuejs.org/): a page that display your HTTP client's user agent
+A demo application written with [nest.js](https://nestjs.com/) and
+[Vue](https://vuejs.org/): a page that display your HTTP client's user agent
 information.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
