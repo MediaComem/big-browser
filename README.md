@@ -23,17 +23,17 @@ information.
 
 ### Requirements
 
-* [Node.js](https://nodejs.org) 12.x
+* [Node.js](https://nodejs.org) 12+
   * [Installation](https://nodejs.org/en/download/package-manager/)
 * [Redis](https://redis.io/) 4+
-  * [Installation](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04)
+  * [Installation](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04)
     (step 1 is sufficient, optionally with step 2 if you want to make sure it
     works)
 
 ### Setup
 
-* Clone the repository
-* Install dependencies
+* Clone the repository.
+* Install dependencies:
 
   ```
   cd /path/to/repo
