@@ -1,9 +1,13 @@
 {
   "name": "big-browser",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Big Browser is watching you",
+  "author": "Simon Oulevay <simon.oulevay@heig-vd.ch>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MediaComem/big-browser.git"
+  },
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
