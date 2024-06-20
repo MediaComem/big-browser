@@ -1,8 +1,10 @@
 # Big Browser
 
-A demo application written with [nest.js](https://nestjs.com) and
-[Vue](https://vuejs.org): a page that display your HTTP client's user agent
+A demo application written with [NestJS](https://nestjs.com) and
+[Vue](https://vuejs.org): a page that displays your HTTP client's user agent
 information.
+
+> Big browser is watching you.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -21,7 +23,7 @@ information.
 ### Requirements
 
 - [Node.js](https://nodejs.org) 22.x
-- [Redis](https://redis.io/) 7.x
+- [Redis](https://redis.io/) 5.x, 6.x or 7.x
 
 ### Setup
 
