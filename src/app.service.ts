@@ -1,18 +1,38 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/class-methods-use-this */
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Logger,
+  OnApplicationBootstrap
+} from '@nestjs/common';
+import chalk from 'chalk';
+import { relative as relativePath } from 'node:path';
 import { UAParser } from 'ua-parser-js';
-import { db, key } from './db';
-import { memory } from './config';
+
+import { memory } from './config.js';
+import { publicDir, root } from './constants.js';
+import { db, key } from './db.js';
 
 @Injectable()
-export class AppService {
+export class AppService implements OnApplicationBootstrap {
+  readonly #logger: Logger;
 
-  async detectUserAgent(userAgentHeader?: string) {
+  constructor() {
+    this.#logger = new Logger(new.target.name);
+  }
+
+  onApplicationBootstrap(): void {
+    this.#logger.log(`Assets will be served from ${chalk.magenta(relativePath(root, publicDir))}`);
+  }
+
+  async detectUserAgent(this: void, userAgentHeader?: string) {
     if (!userAgentHeader) {
       throw new HttpException('Missing User-Agent header', HttpStatus.BAD_REQUEST);
     }
 
     const result = new UAParser(userAgentHeader).getResult();
-    await db.zadd(key('ua'), Date.now(), JSON.stringify(result));
+    await db.zAdd(key('ua'), { score: Date.now(), value: JSON.stringify(result) });
 
     return result;
   }
@@ -31,22 +51,26 @@ export class AppService {
     }));
   }
 
-  private async cleanUpUserAgents(uas: Array<{ ua: string, createdAt: number }>) {
-    if (uas.length) {
-      await db.zrem(key('ua'), uas.map(ua => ua.ua));
+  private async cleanUpUserAgents(uas: Array<{ ua: string; createdAt: number }>) {
+    if (uas.length !== 0) {
+      await db.zRem(
+        key('ua'),
+        uas.map(ua => ua.ua)
+      );
     }
   }
 
   private async listUserAgents() {
-
-    const uasWithScores = await db.zrangebyscore(key('ua'), 0, Date.now(), 'WITHSCORES');
-    if (!uasWithScores.length) {
+    const uasWithScores = await db.zRangeByScoreWithScores(key('ua'), 0, Date.now());
+    if (uasWithScores.length === 0) {
       return [];
     }
 
-    return Array(uasWithScores.length / 2).fill(0).map((_, i) => ({
-      ua: uasWithScores[i * 2],
-      createdAt: parseInt(uasWithScores[i * 2 + 1], 10)
-    })).reverse();
+    return uasWithScores
+      .flatMap(({ score, value }) => ({
+        ua: value,
+        createdAt: score
+      }))
+      .reverse();
   }
 }

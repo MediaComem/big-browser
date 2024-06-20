@@ -5,7 +5,7 @@ Vue.component('current-user-agent', {
     };
   },
   beforeMount() {
-    detectUserAgent().then(result => this.ua = result);
+    detectUserAgent().then(result => (this.ua = result));
   },
   template: `
     <div class='col-lg-6 offset-lg-3'>
@@ -23,7 +23,7 @@ Vue.component('current-user-agent', {
 
           <!-- Device -->
           <tr v-if='ua.device && (ua.device.vendor || ua.device.type)'>
-            <th scope='row'>Device</th>
+            <th scope='row' style='width: 50%;'>Device</th>
             <td>
               <span v-if='ua.device.vendor'>{{ ua.device.vendor }}</span>
               <span v-if='ua.device.type'>{{ ua.device.type }}</span>
@@ -32,46 +32,46 @@ Vue.component('current-user-agent', {
 
           <!-- Browser -->
           <tr v-if='ua.browser && (ua.browser.name || ua.browser.version)'>
-            <th scope='row'>Browser</th>
+            <th scope='row' style='width: 50%;'>Browser</th>
             <td>
               <span v-if='ua.browser.name'>{{ ua.browser.name }}</span>
               <span v-if='!ua.browser.name' class='text-muted'>N/A</span>
             </td>
           </tr>
           <tr v-if='ua.browser.version'>
-            <th scope='row'><small class='text-secondary'>version</small></th>
+            <th scope='row' style='width: 50%;'><small class='text-secondary'>version</small></th>
             <td><small><code>{{ ua.browser.version }}</code></small></td>
           </tr>
 
           <!-- OS -->
           <tr v-if='ua.os && (ua.os.name || ua.os.version)'>
-            <th scope='row'>Operating System</th>
+            <th scope='row' style='width: 50%;'>Operating System</th>
             <td>
               <span v-if='ua.os.name'>{{ ua.os.name }}</span>
               <span v-if='!ua.os.name' class='text-muted'>N/A</span>
             </td>
           </tr>
           <tr v-if='ua.os.version'>
-            <th scope='row'><small class='text-secondary'>version</small></th>
+            <th scope='row' style='width: 50%;'><small class='text-secondary'>version</small></th>
             <td><small><code>{{ ua.os.version }}</code></small></td>
           </tr>
 
           <!-- Engine -->
           <tr v-if='ua.engine && (ua.engine.name || ua.engine.version)'>
-            <th scope='row'>Engine</th>
+            <th scope='row' style='width: 50%;'>Engine</th>
             <td>
               <span v-if='ua.engine.name'>{{ ua.engine.name }}</span>
               <span v-if='!ua.engine.name' class='text-muted'>N/A</span>
             </td>
           </tr>
           <tr v-if='ua.engine.version'>
-            <th scope='row'><small class='text-secondary'>version</small></th>
+            <th scope='row' style='width: 50%;'><small class='text-secondary'>version</small></th>
             <td><small><code>{{ ua.engine.version }}</code></small></td>
           </tr>
 
           <!-- CPU -->
           <tr v-if='ua.cpu.architecture'>
-            <th scope='row'>CPU Architecture</th>
+            <th scope='row' style='width: 50%;'>CPU Architecture</th>
             <td>{{ ua.cpu.architecture }}</td>
           </tr>
         </tbody>

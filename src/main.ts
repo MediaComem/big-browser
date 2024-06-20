@@ -1,16 +1,31 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import chalk from 'chalk';
 
-import { AppModule } from './app.module';
-import { port } from './config';
-import { db } from './db';
+import { AppModule } from './app.module.js';
+import { port } from './config.js';
+import { db } from './db.js';
 
-async function bootstrap() {
+async function start() {
+  const logger = new Logger('main');
   const app = await NestFactory.create(AppModule);
+
+  const sanitizedUrl = new URL(db.url);
+  if (sanitizedUrl.password !== '') {
+    sanitizedUrl.password = '***';
+  }
+
+  logger.debug(`Connecting to the database at ${sanitizedUrl.toString()}...`);
+  await db.connect();
+  logger.log(`Connected to the database at ${sanitizedUrl.toString()}`);
+
   await app.listen(port);
 }
 
-Promise.resolve().then(db.connect).then(bootstrap).catch(err => {
-  console.error(chalk.red(err.stack));
-  process.exit(1);
-});
+Promise.resolve()
+  .then(start)
+  // eslint-disable-next-line unicorn/prefer-top-level-await
+  .catch((err: unknown) => {
+    console.error(chalk.red(err instanceof Error ? err.stack : err));
+    process.exit(1);
+  });

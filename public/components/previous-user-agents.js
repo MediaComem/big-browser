@@ -5,7 +5,7 @@ Vue.component('previous-user-agents', {
     };
   },
   beforeMount() {
-    loadPreviousUserAgents().then(uas => this.uas = uas);
+    loadPreviousUserAgents().then(uas => (this.uas = uas));
   },
   template: `
     <div class='col-lg-8 offset-lg-2' v-if='uas.length'>

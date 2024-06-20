@@ -1,30 +1,34 @@
 import { createClient } from 'redis';
-import { promisify } from 'util';
 
-import { databaseUrl, databasePrefix } from './config';
+import { databasePrefix, databaseUrl } from './config.js';
 
-const client = createClient(databaseUrl);
+const client = createClient({ url: databaseUrl });
 
-const connected = new Promise((resolve, reject) => {
-  client.on('error', reject);
-  client.on('ready', resolve);
-});
+const connected = client
+  .on('error', err => {
+    // eslint-disable-next-line no-console
+    console.warn(err);
+  })
+  .connect();
 
 export const db = {
-  async connect() {
+  url: databaseUrl,
+
+  connect(): Promise<unknown> {
     return connected;
   },
 
-  zadd: promisify(client.zadd).bind(client),
-  zrangebyscore: promisify(client.zrangebyscore).bind(client),
-  zrem: promisify(client.zrem).bind(client)
+  zAdd: client.zAdd.bind(client),
+  zRangeByScore: client.zRangeByScore.bind(client),
+  zRangeByScoreWithScores: client.zRangeByScoreWithScores.bind(client),
+  zRem: client.zRem.bind(client)
 };
 
-export function key(...parts: string[]) {
+export function key(...parts: string[]): string {
   const prefix = getPrefix();
-  return prefix ? [ prefix, ...parts ].join(':') : parts.join(':');
+  return prefix ? [prefix, ...parts].join(':') : parts.join(':');
 }
 
-function getPrefix() {
-  return databasePrefix.trim().length ? databasePrefix.trim() : undefined;
+function getPrefix(): string | undefined {
+  return databasePrefix.trim().length === 0 ? undefined : databasePrefix.trim();
 }
