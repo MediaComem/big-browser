@@ -1,3 +1,16 @@
+const developmentEnvironment = 'development';
+const productionEnvironment = 'production';
+
+export const environment = process.env['NODE_ENV'] ?? 'development';
+
+export function isDevelopment(): boolean {
+  return environment === developmentEnvironment;
+}
+
+export function isProduction(): boolean {
+  return environment === productionEnvironment;
+}
+
 export const databasePrefix = process.env['BIG_BROWSER_DATABASE_PREFIX'] ?? 'big-browser';
 
 export const databaseUrl =
@@ -6,6 +19,9 @@ export const databaseUrl =
 export const memory = parseEnvInt('BIG_BROWSER_MEMORY', 0, 10_000) ?? 5;
 export const port =
   parseEnvInt('BIG_BROWSER_PORT', 1, 65_535) ?? parseEnvInt('PORT', 1, 65_535) ?? 3000;
+
+export const frontendProxyUrl =
+  process.env['BIG_BROWSER_FRONTEND_PROXY'] ?? 'http://localhost:5173';
 
 function parseEnvInt(name: string, min?: number, max?: number) {
   const value = process.env[name];

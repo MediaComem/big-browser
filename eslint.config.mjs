@@ -1,9 +1,11 @@
 import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import vueEslintConfigTypescript from '@vue/eslint-config-typescript';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import sonarjs from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
+import vue from 'eslint-plugin-vue';
 import globals from 'globals';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,9 +17,11 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
+const frontendFiles = ['ts', 'vue'].map(ext => `frontend/**/*.${ext}`);
+
 export default [
   {
-    ignores: ['dist', 'node_modules', 'public', 'tmp']
+    ignores: ['dist', 'node_modules', 'public', 'tmp', 'frontend/node_modules']
   },
   js.configs.all,
   ...tsEslint.configs.recommended,
@@ -33,7 +37,7 @@ export default [
   ),
   eslintConfigPrettier,
   {
-    files: ['**/*.js', '**/*.mjs', '**/*.ts'],
+    files: ['**/*.js', '**/*.mjs', '**/*.ts', '**/*.vue'],
     languageOptions: {
       globals: {
         ...globals.browser
@@ -89,9 +93,11 @@ export default [
           'newlines-between': 'always'
         }
       ],
+      'max-statements': ['error', 20],
       'new-cap': 'off',
       'no-empty-function': 'off',
       'no-magic-numbers': 'off',
+      'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
       'no-ternary': 'off',
       'no-undefined': 'off',
       'no-use-before-define': 'off',
@@ -117,10 +123,31 @@ export default [
     }
   },
   {
-    files: ['src/main.ts'],
+    files: ['backend/src/main.ts'],
     rules: {
       'no-console': ['error', { allow: ['error'] }],
       'unicorn/no-process-exit': 'off'
+    }
+  },
+  // Frontend
+  ...vue.configs['flat/recommended'].map(config => ({
+    ...config,
+    files: config.files?.map(file => `frontend/${file}`) ?? frontendFiles
+  })),
+  ...compat.config(vueEslintConfigTypescript),
+  {
+    files: frontendFiles,
+    rules: {
+      'no-useless-assignment': 'off',
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: {
+            kebabCase: true,
+            pascalCase: true
+          }
+        }
+      ]
     }
   }
 ];

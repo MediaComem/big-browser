@@ -3,7 +3,7 @@ import { Request } from 'express';
 
 import { AppService } from './app.service.js';
 
-@Controller('/ua')
+@Controller('/api/ua')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 

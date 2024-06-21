@@ -10,9 +10,10 @@ import chalk from 'chalk';
 import { relative as relativePath } from 'node:path';
 import { UAParser } from 'ua-parser-js';
 
-import { memory } from './config.js';
-import { publicDir, root } from './constants.js';
-import { db, key } from './db.js';
+import { memory } from '../config.js';
+import { publicDir, root } from '../constants.js';
+import { db, key } from '../db.js';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
@@ -32,9 +33,13 @@ export class AppService implements OnApplicationBootstrap {
     }
 
     const result = new UAParser(userAgentHeader).getResult();
-    await db.zAdd(key('ua'), { score: Date.now(), value: JSON.stringify(result) });
+    const now = DateTime.now();
+    await db.zAdd(key('ua'), { score: now.toMillis(), value: JSON.stringify(result) });
 
-    return result;
+    return {
+      ...result,
+      createdAt: now.toISO()
+    };
   }
 
   async retrieveUserAgents() {
@@ -47,7 +52,7 @@ export class AppService implements OnApplicationBootstrap {
 
     return uas.slice(0, memory).map(ua => ({
       ...JSON.parse(ua.ua),
-      createdAt: new Date(ua.createdAt).toISOString()
+      createdAt: DateTime.fromMillis(ua.createdAt).toISO()
     }));
   }
 
@@ -61,7 +66,7 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   private async listUserAgents() {
-    const uasWithScores = await db.zRangeByScoreWithScores(key('ua'), 0, Date.now());
+    const uasWithScores = await db.zRangeByScoreWithScores(key('ua'), 0, DateTime.now().toMillis());
     if (uasWithScores.length === 0) {
       return [];
     }

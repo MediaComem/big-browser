@@ -10,51 +10,50 @@
   },
   "type": "module",
   "scripts": {
-    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "build": "npm run build:frontend && npm run build:backend && copyfiles -u 2 \"./frontend/dist/**/*\" ./dist/public/",
+    "build:backend": "npm run --workspace backend build",
+    "build:frontend": "npm run --workspace frontend build",
     "check": "npm run format && npm run lint",
     "check:write": "npm run format:write && npm run lint:write",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "start": "nest start --preserveWatchOutput --watch --watchAssets",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main.js",
     "lint": "eslint --max-warnings 0",
-    "lint:write": "eslint --max-warnings 0"
+    "lint:write": "eslint --max-warnings 0",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "npm run --workspace backend start",
+    "start:frontend": "npm run --workspace frontend start",
+    "start:prod": "npm run --workspace backend start:prod"
   },
-  "dependencies": {
-    "@nestjs/common": "^10.3.9",
-    "@nestjs/core": "^10.3.9",
-    "@nestjs/platform-express": "^10.3.9",
-    "@nestjs/serve-static": "^4.0.2",
-    "chalk": "^5.3.0",
-    "redis": "^4.6.14",
-    "reflect-metadata": "^0.2.2",
-    "rimraf": "^5.0.7",
-    "rxjs": "^7.8.1",
-    "ua-parser-js": "^1.0.38",
-    "uuid": "^10.0.0"
-  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "devDependencies": {
     "@eslint/compat": "^1.1.0",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.5.0",
-    "@nestjs/cli": "^10.3.2",
-    "@types/express": "^4.16.1",
-    "@types/node": "^20.14.6",
-    "@types/ua-parser-js": "^0.7.33",
-    "@types/uuid": "^9.0.8",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-promise": "^6.2.0",
     "eslint-plugin-sonarjs": "^1.0.3",
     "eslint-plugin-unicorn": "^54.0.0",
+    "eslint-plugin-vue": "^9.26.0",
     "globals": "^15.6.0",
     "prettier": "^3.3.2",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.30"
+  },
+  "overrides": {
+    "@vue/eslint-config-typescript": {
+      "eslint": "^9.5.0"
+    },
+    "eslint-plugin-import": {
+      "eslint": "^9.5.0"
+    }
   },
   "engines": {
     "node": ">= 22.0.0 < 23.0.0",
