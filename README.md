@@ -57,9 +57,10 @@ npm run start:prod
 The following environment variables can be set to customize the application's
 behavior:
 
-| Variable                                    | Default value              | Description                                           |
-| :------------------------------------------ | :------------------------- | :---------------------------------------------------- |
-| `BIG_BROWSER_DATABASE_PREFIX`               | `big-browser`              | Base URL at which the application is deployed.        |
-| `BIG_BROWSER_DATABASE_URL` (or `REDIS_URL`) | `redis://localhost:6379/0` | Redis connection URL.                                 |
-| `BIG_BROWSER_MEMORY`                        | 5                          | Number of previously scanned user agents to remember. |
-| `BIG_BROWSER_PORT` (or `PORT`)              | 3000                       | Port on which to listen to.                           |
+| Variable                                    | Default value              | Description                                                    |
+| :------------------------------------------ | :------------------------- | :------------------------------------------------------------- |
+| `BIG_BROWSER_DATABASE_PREFIX`               | `big-browser`              | Base URL at which the application is deployed.                 |
+| `BIG_BROWSER_DATABASE_URL` (or `REDIS_URL`) | `redis://localhost:6379/0` | Redis connection URL.                                          |
+| `BIG_BROWSER_FRONTEND_URL`                  | `http://localhost:5173`    | URL to which frontend requests are proxied during development. |
+| `BIG_BROWSER_MEMORY`                        | 5                          | Number of previously scanned user agents to remember.          |
+| `BIG_BROWSER_PORT` (or `PORT`)              | 3000                       | Port on which to listen to.                                    |
