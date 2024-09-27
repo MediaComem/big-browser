@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CurrentUserAgent from './components/CurrentUserAgent.vue'
-import PreviousUserAgents from './components/PreviousUserAgents.vue'
+import CurrentUserAgent from './components/CurrentUserAgent.vue';
+import PreviousUserAgents from './components/PreviousUserAgents.vue';
 </script>
 
 <template>
@@ -10,5 +10,4 @@ import PreviousUserAgents from './components/PreviousUserAgents.vue'
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
