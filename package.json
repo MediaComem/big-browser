@@ -51,10 +51,10 @@
   },
   "overrides": {
     "@vue/eslint-config-typescript": {
-      "eslint": "^9.5.0"
+      "eslint": "$eslint"
     },
     "eslint-plugin-import": {
-      "eslint": "^9.5.0"
+      "eslint": "$eslint"
     }
   },
   "engines": {
