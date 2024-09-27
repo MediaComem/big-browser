@@ -1,0 +1,21 @@
+# https://docs.docker.com/build/concepts/context/#dockerignore-files
+/compose.yml
+/dist
+/Dockerfile
+/e2e
+/.editorconfig
+/eslint.config.mjs
+/frontend/dist
+/frontend/node_modules
+/.github
+/.gitignore
+/node_modules
+/nodemon.json
+/playwright-report
+/playwright.config.ts
+/.prettierignore
+/.prettierrc.yml
+/test-results
+/tmp
+/.tool-versions
+/.vscode

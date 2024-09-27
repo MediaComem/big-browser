@@ -1,0 +1,38 @@
+name: big-browser
+
+services:
+  app:
+    build:
+      context: .
+    image: archidep/big-browser
+    depends_on:
+      - db
+    environment:
+      - BIG_BROWSER_DATABASE_URL=redis://db:6379/0
+    init: true
+    networks:
+      - app
+      - db
+    ports:
+      - '${BIG_BROWSER_PORT:-3000}:3000'
+
+  db:
+    image: redis:7.4.0-alpine
+    command:
+      - redis-server
+      - '--save'
+      - '60'
+      - '1'
+      - '--loglevel'
+      - warning
+    networks:
+      - db
+    volumes:
+      - db-data:/data
+
+networks:
+  app:
+  db:
+
+volumes:
+  db-data:

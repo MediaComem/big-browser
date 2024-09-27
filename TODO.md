@@ -1,4 +1,0 @@
-# TODO
-
-* Dockerfile
-* Automated tests
