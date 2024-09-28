@@ -1,8 +1,9 @@
+import { isLeft } from 'fp-ts/lib/Either';
 import * as t from 'io-ts';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+
 import { iso8601DateTime } from '../utils/iso-8601-date-time';
-import { isLeft } from 'fp-ts/lib/Either';
 
 export const userAgent = t.readonly(
   t.type({

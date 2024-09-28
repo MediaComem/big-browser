@@ -19,9 +19,11 @@ const compat = new FlatCompat({
 
 const frontendFiles = ['ts', 'vue'].map(ext => `frontend/**/*.${ext}`);
 
+const { plugins, ...restVue } = vueEslintConfigTypescript;
+
 export default [
   {
-    ignores: ['dist', 'node_modules', 'public', 'tmp', 'frontend/node_modules']
+    ignores: ['dist', 'frontend/dist', 'node_modules', 'public', 'tmp', 'frontend/node_modules']
   },
   js.configs.all,
   ...tsEslint.configs.recommended,
@@ -51,6 +53,12 @@ export default [
     rules: {
       '@typescript-eslint/class-methods-use-this': 'error',
       '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          ignoreRestSiblings: true
+        }
+      ],
       '@typescript-eslint/no-use-before-define': [
         'error',
         {
@@ -93,6 +101,7 @@ export default [
           'newlines-between': 'always'
         }
       ],
+      'init-declarations': 'off',
       'max-statements': ['error', 20],
       'new-cap': 'off',
       'no-empty-function': 'off',
@@ -100,6 +109,7 @@ export default [
       'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
       'no-ternary': 'off',
       'no-undefined': 'off',
+      'no-unused-vars': 'off',
       'no-use-before-define': 'off',
       'no-useless-constructor': 'off',
       'one-var': ['error', 'never'],
@@ -134,7 +144,7 @@ export default [
     ...config,
     files: config.files?.map(file => `frontend/${file}`) ?? frontendFiles
   })),
-  ...compat.config(vueEslintConfigTypescript),
+  ...compat.config(restVue),
   {
     files: frontendFiles,
     rules: {
@@ -147,7 +157,21 @@ export default [
             pascalCase: true
           }
         }
-      ]
+      ],
+      'vue/html-closing-bracket-newline': 'off',
+      'vue/html-indent': 'off',
+      'vue/max-attributes-per-line': [
+        'error',
+        {
+          singleline: {
+            max: 3
+          },
+          multiline: {
+            max: 1
+          }
+        }
+      ],
+      'vue/singleline-html-element-content-newline': 'off'
     }
   }
 ];

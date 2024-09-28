@@ -21,5 +21,3 @@ store.loadPreviousUserAgents();
     </div>
   </div>
 </template>
-
-<style scoped></style>

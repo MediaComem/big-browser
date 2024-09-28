@@ -6,8 +6,8 @@ import { relative as relativePath } from 'node:path';
 
 import { AppModule } from './app/app.module.js';
 import { frontendProxyUrl, isDevelopment, port } from './config.js';
-import { db } from './db.js';
 import { publicDir, root } from './constants.js';
+import { db } from './db.js';
 
 async function start() {
   const logger = new Logger('main');

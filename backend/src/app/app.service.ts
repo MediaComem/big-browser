@@ -7,13 +7,13 @@ import {
   OnApplicationBootstrap
 } from '@nestjs/common';
 import chalk from 'chalk';
+import { DateTime } from 'luxon';
 import { relative as relativePath } from 'node:path';
 import { UAParser } from 'ua-parser-js';
 
 import { memory } from '../config.js';
 import { publicDir, root } from '../constants.js';
 import { db, key } from '../db.js';
-import { DateTime } from 'luxon';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {

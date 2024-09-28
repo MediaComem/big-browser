@@ -16,7 +16,7 @@ function parseHttpUrl(value: unknown): URL | false {
     return false;
   }
 
-  let url = undefined;
+  let url;
   try {
     url = new URL(value);
   } catch {
