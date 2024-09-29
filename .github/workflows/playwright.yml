@@ -16,6 +16,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 6379:6379
     steps:
       # https://github.com/actions/checkout
       - uses: actions/checkout@v4
@@ -42,9 +44,6 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
-        env:
-          BIG_BROWSER_DATABASE_URL: redis://redis:6379/1
-          BIG_BROWSER_PORT: 3001
 
       # https://github.com/actions/upload-artifact
       - uses: actions/upload-artifact@v4
