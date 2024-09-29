@@ -13,7 +13,7 @@
     "build": "npm run build:frontend && npm run build:backend && copyfiles -u 2 \"./frontend/dist/**/*\" ./dist/public/",
     "build:backend": "npm run --workspace backend build",
     "build:frontend": "npm run --workspace frontend build",
-    "check": "npm run format && npm run lint",
+    "check": "npm run format && npm run lint && npm test",
     "check:write": "npm run format:write && npm run lint:write",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
@@ -22,7 +22,9 @@
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "npm run --workspace backend start",
     "start:frontend": "npm run --workspace frontend start",
-    "start:prod": "npm run --workspace backend start:prod"
+    "start:prod": "npm run --workspace backend start:prod",
+    "test": "npm run test:e2e",
+    "test:e2e": "playwright test"
   },
   "workspaces": [
     "backend",
