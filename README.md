@@ -7,6 +7,7 @@ information.
 > Big browser is watching you.
 
 [![build](https://github.com/MediaComem/big-browser/actions/workflows/build.yml/badge.svg)](https://github.com/MediaComem/big-browser/actions/workflows/build.yml)
+[![e2e](https://github.com/MediaComem/big-browser/actions/workflows/e2e.yml/badge.svg)](https://github.com/MediaComem/big-browser/actions/workflows/e2e.yml)
 [![license](https://img.shields.io/github/license/MediaComem/big-browser)](https://opensource.org/licenses/MIT)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
